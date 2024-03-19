@@ -28,130 +28,34 @@ const ScannerPage = () => {
     signer
   )
 
-  // const passData = async (data) => {
-  //   try {
-  //     const scannedData = !!data
-  //       ? { data: JSON.parse(data), search: true }
-  //       : { data: null, search: false }
-
-  //     // !!data && console.log("ScannedData: ", data, scannedData);
-  //     // if (!!data) {
-  //     //   axios
-  //     //     .post("http://localhost:3003/product/verify", {
-  //     //       serialNumber: scannedData?.serialNumber,
-  //     //     })
-  //     //     .then((res) => {
-  //     //       if (res.data) {
-  //     //         //   if (contractAddress == CONTRACT_ADDRESS) {
-  //     //         if (res.data) {
-  //     //           if (auth.role === "supplier" || auth.role === "retailer") {
-  //     //             console.log("ScannedData: ", data, scannedData);
-  //     //             navRole(scannedData);
-  //     //             // navUser(scannedData);
-  //     //           } else {
-  //     //             navUser(scannedData);
-  //     //           }
-  //     //         } else {
-  //     //           navFakeProduct();
-  //     //         }
-  //     //       }
-  //     //     });
-  //     // }
-  //     // try {
-  //     //   const product = await productContract.getProduct(
-  //     //     scannedData?.serialNumber
-  //     //   )
-  //     //   console.log('ProductDetailsfromContract: ', product)
-  //     //   if (product?.length > 0) {
-  //     //     if (auth?.role == 'supplier' || auth?.role == 'retailer') {
-  //     //       navigate('/update-product', { state: { scannedData } })
-  //     //     } else {
-  //     //       navigate('/authentic-product', { state: { scannedData } })
-  //     //     }
-  //     //   } else {
-  //     //     navigate('/fake-product')
-  //     //   }
-  //     // } catch (err) {
-  //     //   console.log('passDataErr: ', err)
-  //     //   navigate('/fake-product')
-  //     // }
-
-  //     if (scannedData?.data?.serialNumber) {
-  //       const product = await productContract
-  //         .getProduct(scannedData?.data?.serialNumber)
-  //         .catch((error) => console.log('asaKa:', error))
-  //       console.log('ProductDetailsfromContract: ', product)
-  //       // if (product?.length > 0) {
-  //       //   if (auth?.role == 'supplier' || auth?.role == 'retailer') {
-  //       //     navigate('/update-product', { state: { scannedData } })
-  //       //   } else {
-  //       //     navigate('/authentic-product', { state: { scannedData } })
-  //       //   }
-  //       // } else {
-  //       //   navigate('/fake-product')
-  //       // }
-
-  //       //   if (auth?.role == 'supplier' || auth?.role == 'retailer') {
-  //       //     navigate('/update-product', { state: { scannedData } })
-  //       //   } else {
-  //       //     navigate('/authentic-product', { state: { scannedData } })
-  //       //   }
-  //     } else {
-  //       navigate('/fake-product')
-  //     }
-  //   } catch (error) {
-  //     navigate('/fake-product')
-  //   }
-  // }
-
   const passData = async (data) => {
     const scannedData = !!data ? JSON.parse(data) : ''
-
-    // !!data && console.log("ScannedData: ", data, scannedData);
-    // if (!!data) {
-    //   axios
-    //     .post("http://localhost:3003/product/verify", {
-    //       serialNumber: scannedData?.serialNumber,
-    //     })
-    //     .then((res) => {
-    //       if (res.data) {
-    //         //   if (contractAddress == CONTRACT_ADDRESS) {
-    //         if (res.data) {
-    //           if (auth.role === "supplier" || auth.role === "retailer") {
-    //             console.log("ScannedData: ", data, scannedData);
-    //             navRole(scannedData);
-    //             // navUser(scannedData);
-    //           } else {
-    //             navUser(scannedData);
-    //           }
-    //         } else {
-    //           navFakeProduct();
-    //         }
-    //       }
-    //     });
-    // }
-    // try {
-    //   const product = await productContract.getProduct(
-    //     scannedData?.serialNumber
-    //   )
-    //   console.log('ProductDetailsfromContract: ', product)
-    //   if (product?.length > 0) {
-    //     if (auth?.role == 'supplier' || auth?.role == 'retailer') {
-    //       navigate('/update-product', { state: { scannedData } })
-    //     } else {
-    //       navigate('/authentic-product', { state: { scannedData } })
-    //     }
-    //   } else {
-    //     navigate('/fake-product')
-    //   }
-    // } catch (err) {
-    //   console.log('passDataErr: ', err)
-    //   navigate('/fake-product')
-    // }
 
     console.log('scannedData?.serialNumber: ', scannedData?.serialNumber)
 
     if (scannedData?.serialNumber) {
+      axios
+        .post('http://localhost:3003/product/verify', {
+          serialNumber: scannedData?.serialNumber,
+        })
+        .then(async (res) => {
+          if (res.data) {
+            const product = await productContract.getProduct(
+              scannedData?.serialNumber
+            )
+
+            if (product?.length > 0) {
+              if (auth?.role == 'supplier' || auth?.role == 'retailer') {
+                navigate('/update-product', { state: { scannedData } })
+              } else {
+                navigate('/authentic-product', { state: { scannedData } })
+              }
+            } else {
+              navigate('/fake-product')
+            }
+          }
+        })
+
       const product = await productContract.getProduct(
         scannedData?.serialNumber
       )
@@ -168,8 +72,6 @@ const ScannerPage = () => {
     } else {
       navigate('/fake-product')
     }
-
-    // navigate('/authentic-product', { state: { scannedData } })
   }
 
   const handleBack = () => {
