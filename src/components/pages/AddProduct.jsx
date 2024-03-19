@@ -230,6 +230,8 @@ const AddProduct = () => {
 
         console.log('Retrieved product...', product)
         setLoading('')
+
+        navigate('/manufacturer')
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -319,7 +321,7 @@ const AddProduct = () => {
       sx={{
         // backgroundImage: `url(${bgImg})`,
         backgroundColor: '#e3eefc',
-        minHeight: '80vh',
+        // minHeight: '80vh',
         backgroundRepeat: 'no-repeat',
         position: 'absolute',
         left: 0,
@@ -482,8 +484,8 @@ const AddProduct = () => {
             sx={{
               width: '100%',
               marginTop: '3%',
-              backgroundColor: '#98b5d5',
-              '&:hover': { backgroundColor: '#618dbd' },
+              // backgroundColor: '#98b5d5',
+              // '&:hover': { backgroundColor: '#618dbd' },
             }}
             // onClick={getCurrentTimeLocation}
           >

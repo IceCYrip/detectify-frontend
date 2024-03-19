@@ -336,8 +336,8 @@ const UpdateProductDetails = () => {
               textAlign: 'center',
               width: '50%',
               marginTop: '3%',
-              backgroundColor: '#98b5d5',
-              '&:hover': { backgroundColor: '#618dbd' },
+              // backgroundColor: '#98b5d5',
+              // '&:hover': { backgroundColor: '#618dbd' },
             }}
           >
             Update Product
@@ -352,6 +352,7 @@ const UpdateProductDetails = () => {
           }}
         >
           <Button
+            variant='outlined'
             onClick={handleBack}
             sx={{
               marginTop: '5%',

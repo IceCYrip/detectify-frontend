@@ -450,8 +450,8 @@ const UpdateProduct = () => {
               sx={{
                 width: '50%',
                 marginTop: '3%',
-                backgroundColor: '#98b5d5',
-                '&:hover': { backgroundColor: '#618dbd' },
+                // backgroundColor: '#98b5d5',
+                // '&:hover': { backgroundColor: '#618dbd' },
               }}
               onClick={handleSubmit}
             >
@@ -467,6 +467,7 @@ const UpdateProduct = () => {
             }}
           >
             <Button
+              variant='outlined'
               onClick={handleBack}
               sx={{
                 marginTop: '5%',

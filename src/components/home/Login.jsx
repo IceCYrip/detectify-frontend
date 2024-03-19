@@ -28,6 +28,10 @@ export default function Login() {
   }
 
   useEffect(() => {
+    setAuth({})
+  }, [])
+
+  useEffect(() => {
     setErrMsg('')
   }, [user, pwd])
 

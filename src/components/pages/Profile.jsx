@@ -81,18 +81,32 @@ const Profile = () => {
         >
           {name[0]}
         </Avatar> */}
-        <center>
-          <img
-            src={image}
-            alt='image'
-            width={120}
-            style={{
-              border: '1px solid #1565c0',
-              borderRadius: '50%',
-              boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+        {image ? (
+          <center>
+            <img
+              src={image}
+              alt='image'
+              width={120}
+              style={{
+                border: '1px solid #1565c0',
+                borderRadius: '50%',
+                boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+              }}
+            />
+          </center>
+        ) : (
+          <Avatar
+            sx={{
+              width: 100,
+              height: 100,
+              margin: 'auto',
+              marginBottom: '3%',
+              backgroundColor: '#3f51b5',
             }}
-          />
-        </center>
+          >
+            {name[0]}
+          </Avatar>
+        )}
 
         <Typography
           variant='h4'
