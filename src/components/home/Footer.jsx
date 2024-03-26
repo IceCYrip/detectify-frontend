@@ -2,27 +2,17 @@ import { styled, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
 
-import fbIcon from "../../img/fbicon.png";
-import twitterIcon from "../../img/twittericon.png";
-import linkedinIcon from "../../img/linkedinicon.png";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   const CustomContainer = styled(Container)(({ theme }) => ({
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     gap: theme.spacing(5),
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
       textAlign: "center",
-    },
-  }));
-
-  const IconBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
     },
   }));
 
@@ -34,10 +24,11 @@ const Footer = () => {
     "&:hover": {
       color: "#000",
     },
+    textDecoration: "none",
   }));
 
   return (
-    <Box sx={{ py: 10 }}>
+    <Box sx={{ py: 6 }}>
       <CustomContainer>
         <CustomContainer>
           <Box>
@@ -52,34 +43,9 @@ const Footer = () => {
               Products
             </Typography>
 
-            <FooterLink>Product Verification</FooterLink>
-            <br />
-            <FooterLink>Supply Chain Tracking</FooterLink>
-            <br />
-            <FooterLink>Anti-Counterfeiting</FooterLink>
-            <br />
-            <FooterLink>Smart Contracts</FooterLink>
-          </Box>
-
-          <Box>
-            <Typography
-              sx={{
-                fontSize: "20px",
-                color: "#1C1C1D",
-                fontWeight: "700",
-                mb: 2,
-              }}
-            >
-              Resources
-            </Typography>
-
-            <FooterLink>How It Works</FooterLink>
-            <br />
-            <FooterLink>Case Studies</FooterLink>
-            <br />
-            <FooterLink>Blog</FooterLink>
-            <br />
-            <FooterLink>Whitepaper</FooterLink>
+            <FooterLink onClick={() => navigate("/scanner")}>
+              Verify Product
+            </FooterLink>
           </Box>
 
           <Box>
@@ -94,13 +60,10 @@ const Footer = () => {
               Company
             </Typography>
 
-            <FooterLink>About Us</FooterLink>
+            <FooterLink onClick={() => navigate("/about-us")}>
+              About Us
+            </FooterLink>
             <br />
-            <FooterLink>Partnerships</FooterLink>
-            <br />
-            <FooterLink>Terms of Use</FooterLink>
-            <br />
-            <FooterLink>Privacy Policy</FooterLink>
           </Box>
 
           <Box>
@@ -115,30 +78,15 @@ const Footer = () => {
               Get in touch
             </Typography>
 
-            <Typography
-              sx={{
-                fontSize: "16px",
-                color: "#7A7A7E",
-                fontWeight: "500",
-                mb: 2,
-              }}
-            >
-              Let us help you find the perfect solution for your needs. 
-            </Typography>
-
-            <IconBox>
-              <img src={fbIcon} alt="fbIcon" style={{ cursor: "pointer" }} />
-              <img
-                src={twitterIcon}
-                alt="twitterIcon"
-                style={{ cursor: "pointer" }}
-              />
-              <img
-                src={linkedinIcon}
-                alt="linkedinIcon"
-                style={{ cursor: "pointer" }}
-              />
-            </IconBox>
+            <FooterLink>
+              <span style={{ fontWeight: 500 }}>Email - </span>
+              supportdetectify@gmail.com
+            </FooterLink>
+            <br />
+            <FooterLink>
+              <span style={{ fontWeight: 500 }}>Contact - </span>
+              +91-8788354162
+            </FooterLink>
           </Box>
         </CustomContainer>
       </CustomContainer>

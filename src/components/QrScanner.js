@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { QrReader } from 'react-qr-reader';
+import React, { useEffect, useState } from "react";
+import { QrReader } from "react-qr-reader";
 
 const QrScanner = (props) => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState("");
 
   useEffect(() => {
-    console.log('dataKayNemka: ', data);
+    console.log("dataKayNemka: ", data);
     props.passData(data);
   }, [data]);
 
@@ -13,16 +13,13 @@ const QrScanner = (props) => {
     <>
       <QrReader
         onResult={(result, error) => {
-          console.log('result: ', result)
-          if (result) {
-            setData(result?.text);
+          console.log("ScanResult: ", result);
+          if (!!result?.text) {
+            props.passData(result?.text);
           }
-          // if (error) {
-            //   console.info(error);
-            // }
-          }}
-          onError={(err)=> console.log('err: ',err)}
-        style={{ width: '100%' }}
+        }}
+        onError={(err) => console.log("err: ", err)}
+        style={{ width: "100%" }}
       />
     </>
   );
