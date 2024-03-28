@@ -6,8 +6,10 @@ import bgImg from "../../img/bg.png";
 import heroImg from "../../img/hero_illustration.png";
 import CustomButton from "./CustomButton";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Hero = () => {
+  const { setAuth } = useAuth();
   const CustomBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -69,7 +71,7 @@ const Hero = () => {
               confidence.
             </Typography>
             <div style={{ display: "flex", gap: 20 }}>
-              <Link to="/scanner">
+              <Link to="/scanner" onClick={() => setAuth({})}>
                 <CustomButton
                   backgroundColor="#0F1B4C"
                   color="#fff"

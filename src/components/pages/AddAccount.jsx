@@ -1,4 +1,4 @@
-import '../../css/Role.css'
+import "../../css/Role.css";
 import {
   TextField,
   Box,
@@ -6,41 +6,41 @@ import {
   Typography,
   Autocomplete,
   Button,
-} from '@mui/material'
-import React from 'react'
-import { useRef, useState, useEffect } from 'react'
-import bgImg from '../../img/bg.png'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import compressFile from '../../utils/imageCompression'
+} from "@mui/material";
+import React from "react";
+import { useRef, useState, useEffect } from "react";
+import bgImg from "../../img/bg.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import compressFile from "../../utils/imageCompression";
 
-const options = ['manufacturer', 'supplier', 'retailer']
+const options = ["manufacturer", "supplier", "retailer"];
 
 const AddAccount = () => {
-  const [user, setUser] = useState('')
-  const [pwd, setPwd] = useState('')
-  const [pwd2, setPwd2] = useState('')
-  const [role, setRole] = React.useState(options[0])
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [website, setWebsite] = useState('')
-  const [location, setLocation] = useState('')
-  const [errMsg, setErrMsg] = useState('')
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [pwd2, setPwd2] = useState("");
+  const [role, setRole] = React.useState(options[0]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [website, setWebsite] = useState("");
+  const [location, setLocation] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const [image, setImage] = useState({
     file: [],
     filepreview: null,
-  })
+  });
 
-  const errRef = useRef()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    setErrMsg('')
-  }, [user, pwd])
+  const errRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('imagee: ', image)
-  }, [image])
+    setErrMsg("");
+  }, [user, pwd]);
+
+  useEffect(() => {
+    console.log("imagee: ", image);
+  }, [image]);
 
   // const handleImage = async (e) => {
   //   const file = await compressFile(e.target.files[0])
@@ -62,20 +62,20 @@ const AddAccount = () => {
   // }
 
   const handleCrop = (imageURL) => {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-    const img = new Image()
+    const img = new Image();
     img.onload = () => {
-      const minDimension = Math.min(img.width, img.height)
+      const minDimension = Math.min(img.width, img.height);
 
       // Calculate the cropping coordinates to center the image
-      const cropX = (img.width - minDimension) / 2
-      const cropY = (img.height - minDimension) / 2
+      const cropX = (img.width - minDimension) / 2;
+      const cropY = (img.height - minDimension) / 2;
 
       // Set canvas size to the desired cropped size
-      canvas.width = minDimension
-      canvas.height = minDimension
+      canvas.width = minDimension;
+      canvas.height = minDimension;
 
       // Draw the cropped image on the canvas
       ctx.drawImage(
@@ -88,10 +88,10 @@ const AddAccount = () => {
         0,
         minDimension,
         minDimension
-      )
+      );
 
       // Convert the canvas content to a data URL
-      const croppedImageBase64 = canvas.toDataURL('image/jpeg') // You can use other formats like 'image/png' if needed
+      const croppedImageBase64 = canvas.toDataURL("image/jpeg"); // You can use other formats like 'image/png' if needed
 
       // imageSetter(croppedImageBase64)
       setImage({
@@ -99,71 +99,71 @@ const AddAccount = () => {
         // file: file,
         // filepreview: URL.createObjectURL(e.target.files[0]),
         filepreview: croppedImageBase64,
-      })
-    }
+      });
+    };
 
     // img.src = image
-    img.src = imageURL
-  }
+    img.src = imageURL;
+  };
 
   const handleImage = async (event) => {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
 
-    const compressedImage = await compressFile(file)
+    const compressedImage = await compressFile(file);
 
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = () => {
         // setImage(reader.result)
-        handleCrop(reader.result)
-      }
-      reader.readAsDataURL(compressedImage)
+        handleCrop(reader.result);
+      };
+      reader.readAsDataURL(compressedImage);
     }
-  }
+  };
 
   // to upload image
   const uploadImage = async (image) => {
-    const data = new FormData()
-    data.append('image', image.file)
+    const data = new FormData();
+    data.append("image", image.file);
 
     axios
-      .post('http://localhost:3003/upload/profile', data, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      .post("http://localhost:3003/upload/profile", data, {
+        headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
-        console.log(res)
+        console.log(res);
 
         if (res.data.success === 1) {
-          console.log('image uploaded')
+          console.log("image uploaded");
         }
-      })
-  }
+      });
+  };
 
   const handleBack = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // for debugging only
-    console.log('-----------------------------------')
-    console.log('user: ' + user)
-    console.log('pwd: ' + pwd)
-    console.log('pwd2: ' + pwd2)
-    console.log('role: ' + role)
-    console.log('image: ' + image.file.name)
-    console.log('name: ' + name)
-    console.log('description: ' + description)
-    console.log('website: ' + website)
-    console.log('location: ' + location)
+    console.log("-----------------------------------");
+    console.log("user: " + user);
+    console.log("pwd: " + pwd);
+    console.log("pwd2: " + pwd2);
+    console.log("role: " + role);
+    console.log("image: " + image.file.name);
+    console.log("name: " + name);
+    console.log("description: " + description);
+    console.log("website: " + website);
+    console.log("location: " + location);
 
     try {
       const accountData = JSON.stringify({
         username: user,
         password: pwd,
         role: role,
-      })
+      });
 
       const profileData = JSON.stringify({
         username: user,
@@ -174,103 +174,93 @@ const AddAccount = () => {
         // image: image.file.name,
         image: image.filepreview,
         role: role,
-      })
+      });
 
-      console.log('aaheKaImage: ', image.file)
+      console.log("aaheKaImage: ", image.file);
 
       const res = await axios.post(
-        'http://localhost:3003/addaccount',
+        "http://localhost:3003/addaccount",
         accountData,
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
-      )
+      );
 
-      console.log(JSON.stringify(res.data))
+      console.log(JSON.stringify(res.data));
 
       const res2 = await axios.post(
-        'http://localhost:3003/addprofile',
+        "http://localhost:3003/addprofile",
         profileData,
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
         }
-      )
+      );
 
-      console.log(JSON.stringify(res2.data))
+      console.log(JSON.stringify(res2.data));
 
-      uploadImage(image)
+      uploadImage(image);
 
-      setUser('')
-      setPwd('')
-      setPwd2('')
-      setRole(options[0])
-      setName('')
-      setDescription('')
-      setWebsite('')
-      setLocation('')
+      setUser("");
+      setPwd("");
+      setPwd2("");
+      setRole(options[0]);
+      setName("");
+      setDescription("");
+      setWebsite("");
+      setLocation("");
       setImage({
         file: [],
         filepreview: null,
-      })
+      });
     } catch (err) {
       if (!err?.response) {
-        setErrMsg('Server is down. Please try again later.')
+        setErrMsg("Server is down. Please try again later.");
       } else if (err.response?.status === 400) {
-        setErrMsg('Invalid username or password.')
+        setErrMsg("Invalid username or password.");
       } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized access.')
+        setErrMsg("Unauthorized access.");
       } else {
-        setErrMsg('Login Failed. Please try again later.')
+        setErrMsg("Login Failed. Please try again later.");
       }
-      errRef.current.focus()
+      errRef.current.focus();
     }
-  }
+  };
 
   return (
     <Box
       sx={{
-        // backgroundImage: `url(${bgImg})`,
-        backgroundColor: '#e3eefc',
-        minHeight: '100vh',
-        backgroundRepeat: 'no-repeat',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        backgroundSize: 'cover',
-        zIndex: -2,
-        overflowY: 'scroll',
+        minHeight: "92vh",
+        backgroundColor: "#e3eefc",
+        display: "grid",
+        placeItems: "center",
       }}
     >
       <Paper
         elevation={3}
         sx={{
-          width: '400px',
-          margin: 'auto',
-          marginTop: '10%',
-          marginBottom: '10%',
-          padding: '3%',
+          width: "400px",
+          margin: "5vh 0vh",
+          padding: "3%",
           // backgroundColor: '#e3eefc',
-          backgroundColor: 'white',
+          backgroundColor: "white",
         }}
       >
         <p
           ref={errRef}
-          className={errMsg ? 'errmsg' : 'offscreen'}
-          aria-live='assertive'
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
         >
           {errMsg}
         </p>
 
         <Typography
-          variant='h2'
+          variant="h2"
           sx={{
-            textAlign: 'center',
-            marginBottom: '3%',
-            fontFamily: 'Gambetta',
-            fontWeight: 'bold',
-            fontSize: '2.5rem',
+            textAlign: "center",
+            marginBottom: "3%",
+            fontFamily: "Gambetta",
+            fontWeight: "bold",
+            fontSize: "2.5rem",
           }}
         >
           Add Account
@@ -279,46 +269,46 @@ const AddAccount = () => {
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Username'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Username"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setUser(e.target.value)}
             value={user}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Password'
-            type='password'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Password"
+            type="password"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setPwd(e.target.value)}
             value={pwd}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Confirm Password'
-            type='password'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Confirm Password"
+            type="password"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setPwd2(e.target.value)}
             value={pwd2}
           />
 
           {pwd == pwd2 ? null : (
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
-                textAlign: 'center',
-                fontSize: '12px',
-                color: 'red',
+                textAlign: "center",
+                fontSize: "12px",
+                color: "red",
               }}
             >
               Passwords do not match
@@ -327,63 +317,63 @@ const AddAccount = () => {
 
           <Autocomplete
             disablePortal
-            id='combo-box-demo'
+            id="combo-box-demo"
             options={options}
             fullWidth
             value={role}
             onChange={(event, newRole) => {
-              setRole(newRole)
+              setRole(newRole);
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 fullWidth
-                id='outlined-basic'
-                margin='normal'
-                label='Role'
-                variant='outlined'
-                inherit='False'
+                id="outlined-basic"
+                margin="normal"
+                label="Role"
+                variant="outlined"
+                inherit="False"
               />
             )}
           />
 
           <Button
-            variant='contained'
-            component='label'
+            variant="contained"
+            component="label"
             fullWidth
             // onChange = {handleImage}
-            sx={{ marginTop: '3%' }}
+            sx={{ marginTop: "3%" }}
           >
             Upload Image
-            <input type='file' hidden onChange={handleImage} />
+            <input type="file" hidden onChange={handleImage} />
           </Button>
 
           {image.filepreview !== null ? (
             <img
               src={image.filepreview}
-              alt='preview'
-              style={{ width: '100%', height: '100%' }}
+              alt="preview"
+              style={{ width: "100%", height: "100%" }}
             />
           ) : null}
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Name'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Name"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Description'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Description"
+            variant="outlined"
+            inherit="False"
             multiline
             minRows={2}
             onChange={(e) => setDescription(e.target.value)}
@@ -392,32 +382,32 @@ const AddAccount = () => {
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Website'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Website"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setWebsite(e.target.value)}
             value={website}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Location'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Location"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setLocation(e.target.value)}
             value={location}
           />
 
           <Button
-            variant='contained'
-            type='submit'
+            variant="contained"
+            type="submit"
             sx={{
-              width: '100%',
-              marginTop: '3%',
+              width: "100%",
+              marginTop: "3%",
               // backgroundColor: '#98b5d5',
               // '&:hover': { backgroundColor: '#618dbd' },
             }}
@@ -427,16 +417,16 @@ const AddAccount = () => {
 
           <Box
             sx={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               onClick={handleBack}
               sx={{
-                marginTop: '5%',
+                marginTop: "5%",
               }}
             >
               Back
@@ -445,7 +435,7 @@ const AddAccount = () => {
         </form>
       </Paper>
     </Box>
-  )
-}
+  );
+};
 
-export default AddAccount
+export default AddAccount;
