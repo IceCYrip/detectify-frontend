@@ -1,118 +1,118 @@
-import { Box, Paper, Avatar, Typography, Button } from "@mui/material";
-import bgImg from "../../img/bg.png";
-import QrScanner from "../QrScanner";
-import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import abi from "../../utils/Identeefi.json";
-import { ethers } from "ethers";
+import { Box, Paper, Avatar, Typography, Button } from '@mui/material'
+import bgImg from '../../img/bg.png'
+import QrScanner from '../QrScanner'
+import useAuth from '../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import abi from '../../utils/Identeefi.json'
+import { ethers } from 'ethers'
 
 const ScannerPage = () => {
-  const { auth } = useAuth();
-  const navigate = useNavigate();
+  const { auth } = useAuth()
+  const navigate = useNavigate()
 
-  const getEthereumObject = () => window.ethereum;
+  const getEthereumObject = () => window.ethereum
 
-  const ethereum = getEthereumObject();
+  const ethereum = getEthereumObject()
 
-  const CONTRACT_ADDRESS = "0x62081f016446585cCC507528cc785980296b4Ccd";
-  const CONTRACT_ABI = abi.abi;
-  let provider;
+  const CONTRACT_ADDRESS = '0x62081f016446585cCC507528cc785980296b4Ccd'
+  const CONTRACT_ABI = abi.abi
+  let provider
   try {
-    provider = new ethers.providers.Web3Provider(ethereum);
+    provider = new ethers.providers.Web3Provider(ethereum)
   } catch (error) {
-    console.log("providerErr: ", error);
+    console.log('providerErr: ', error)
   }
-  const signer = provider.getSigner();
+  const signer = provider.getSigner()
   const productContract = new ethers.Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
     signer
-  );
+  )
 
   const passData = async (data) => {
-    const scannedData = !!data ? JSON.parse(data) : "";
+    const scannedData = !!data ? JSON.parse(data) : ''
 
-    console.log("scannedData: ", scannedData);
+    console.log('scannedData: ', scannedData)
 
     if (scannedData?.serialNumber) {
       axios
-        .post("http://localhost:3003/product/verify", {
+        .post('http://localhost:3003/product/verify', {
           serialNumber: scannedData?.serialNumber,
         })
         .then(async (res) => {
           if (res.data) {
             const product = await productContract.getProduct(
               scannedData?.serialNumber
-            );
+            )
 
             if (product?.length > 0) {
-              if (auth?.role == "supplier" || auth?.role == "retailer") {
-                navigate("/update-product", { state: { scannedData } });
+              if (auth?.role == 'supplier' || auth?.role == 'retailer') {
+                navigate('/update-product', { state: { scannedData } })
               } else {
-                navigate("/authentic-product", { state: { scannedData } });
+                navigate('/authentic-product', { state: { scannedData } })
               }
             } else {
-              navigate("/fake-product");
+              navigate('/fake-product')
             }
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
 
       const product = await productContract.getProduct(
         scannedData?.serialNumber
-      );
-      console.log("ProductDetailsfromContract: ", product);
+      )
+      console.log('ProductDetailsfromContract: ', product)
       if (product?.length > 0) {
-        if (auth?.role == "supplier" || auth?.role == "retailer") {
-          navigate("/update-product", { state: { scannedData } });
+        if (auth?.role == 'supplier' || auth?.role == 'retailer') {
+          navigate('/update-product', { state: { scannedData } })
         } else {
-          navigate("/authentic-product", { state: { scannedData } });
+          navigate('/authentic-product', { state: { scannedData } })
         }
       } else {
-        navigate("/fake-product");
+        navigate('/fake-product')
       }
     } else {
-      navigate("/fake-product");
+      navigate('/fake-product')
     }
-  };
+  }
 
   const handleBack = () => {
-    navigate(-1);
-  };
+    navigate(auth?.role ? -1 : '/')
+  }
 
   return (
     <Box
       sx={{
-        backgroundColor: "#e3eefc",
-        height: "92vh",
-        display: "grid",
-        placeItems: "center",
+        backgroundColor: '#e3eefc',
+        height: '92vh',
+        display: 'grid',
+        placeItems: 'center',
       }}
     >
       <Paper
         elevation={10}
         sx={{
-          width: "400px",
-          padding: "20px",
-          backgroundColor: "white",
+          width: '400px',
+          padding: '20px',
+          backgroundColor: 'white',
           borderRadius: 8,
         }}
       >
         <Box
           sx={{
-            textAlign: "center",
+            textAlign: 'center',
           }}
         >
           <Typography
-            variant="h2"
+            variant='h2'
             sx={{
-              textAlign: "center",
-              fontFamily: "Gambetta",
-              fontWeight: "bold",
-              fontSize: "2.5rem",
+              textAlign: 'center',
+              fontFamily: 'Gambetta',
+              fontWeight: 'bold',
+              fontSize: '2.5rem',
             }}
           >
             Scan QR Code
@@ -122,14 +122,14 @@ const ScannerPage = () => {
 
           <Box
             sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <Button
               onClick={handleBack}
-              variant="contained"
+              variant='contained'
               // sx={{
               //   marginTop: "5%",
               // }}
@@ -140,7 +140,7 @@ const ScannerPage = () => {
         </Box>
       </Paper>
     </Box>
-  );
-};
+  )
+}
 
-export default ScannerPage;
+export default ScannerPage
