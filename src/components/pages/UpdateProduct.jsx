@@ -35,12 +35,10 @@ const findMetaMaskAccount = async () => {
       return null
     }
 
-    console.log('We have the Ethereum object', ethereum)
     const accounts = await ethereum.request({ method: 'eth_accounts' })
 
     if (accounts.length !== 0) {
       const account = accounts[0]
-      console.log('Found an authorized account:', account)
       return account
     } else {
       console.error('No authorized account found')
@@ -83,22 +81,6 @@ const UpdateProduct = () => {
   const location = useLocation()
   const qrData = location.state?.qrData
 
-  console.log('qrData', qrData)
-
-  // useEffect(() => {
-  //   console.log('useEffect 1')
-
-  //   findMetaMaskAccount().then((account) => {
-  //     if (account !== null) {
-  //       setCurrentAccount(account)
-  //     }
-  //   })
-
-  //   if (qrData) {
-  //     handleScan(qrData)
-  //   }
-  // }, [qrData])
-
   const getImage = async (imageName) => {
     setImage((prevState) => ({
       ...prevState,
@@ -110,9 +92,6 @@ const UpdateProduct = () => {
     const data = qrData.split(',')
     const contractAddress = data[0]
     setSerialNumber(data[1])
-
-    console.log('contract address', contractAddress)
-    console.log('serial number', data[1])
 
     if (contractAddress === CONTRACT_ADDRESS) {
       try {
@@ -129,13 +108,8 @@ const UpdateProduct = () => {
 
           const product = await productContract.getProduct(data[1].toString())
 
-          // setProductData(product.toString())
-
-          console.log('Retrieved product...', product)
-          // setData(product.toString());
           setSaglaData(product)
         } else {
-          console.log("Ethereum object doesn't exist!")
           alert(
             "Ethereum object doesn't exist! Please connect your wallet first!"
           )
@@ -149,7 +123,6 @@ const UpdateProduct = () => {
   const locationState = location.state.scannedData
 
   useEffect(() => {
-    console.log('locationState =====> ', locationState)
     !!locationState?.serialNumber && getDataFromKuthunTari()
   }, [locationState])
 
@@ -169,8 +142,6 @@ const UpdateProduct = () => {
         locationState?.serialNumber
       )
 
-      console.log('Retrieved product...', product)
-      // setData(product.toString())
       setSaglaData(product)
     } else {
       console.log("Ethereum object doesn't exist!")
@@ -195,15 +166,11 @@ const UpdateProduct = () => {
         isSold: obj[4],
       }
     })
-    console.log('historyAali: ', history)
     setHistory(history)
   }
 
   const setData = (d) => {
-    console.log('product data: ', d)
-
     const arr = d.split(',')
-    console.log('arr', arr)
 
     setName(arr[1])
     setBrand(arr[2])
@@ -229,7 +196,6 @@ const UpdateProduct = () => {
 
       start += 5
     }
-    console.log('hist', hist)
     setHistory(hist)
   }
 
@@ -444,7 +410,6 @@ const UpdateProduct = () => {
               {loading}
             </Typography>
           )}
-          {/* {console.log('isSold: ', isSold)} */}
           {!isSold && (
             <Button
               variant='contained'
@@ -452,8 +417,6 @@ const UpdateProduct = () => {
               sx={{
                 width: '50%',
                 marginTop: '3%',
-                // backgroundColor: '#98b5d5',
-                // '&:hover': { backgroundColor: '#618dbd' },
               }}
               onClick={handleSubmit}
             >

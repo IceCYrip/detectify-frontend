@@ -30,12 +30,10 @@ const findMetaMaskAccount = async () => {
       return null
     }
 
-    console.log('We have the Ethereum object', ethereum)
     const accounts = await ethereum.request({ method: 'eth_accounts' })
 
     if (accounts.length !== 0) {
       const account = accounts[0]
-      console.log('Found an authorized account:', account)
       return account
     } else {
       console.error('No authorized account found')
@@ -123,8 +121,7 @@ const AddProduct = () => {
   //       }
   //       // setManuLocation(address.replace(/,/g, ';'))
   //       setManuLocation(address)
-  //       console.log('city, state, country: ', city, state, country)
-  //       console.log('address:', address)
+
   //     },
   //     (error) => {
   //       console.error(error)
@@ -136,7 +133,6 @@ const AddProduct = () => {
     // const qrCode = await productContract.getProduct(serialNumber);
     const data = CONTRACT_ADDRESS + ',' + serialNumber
     setQrData(data)
-    console.log('QR Code: ', qrData)
   }
 
   const downloadQR = () => {
@@ -164,7 +160,6 @@ const AddProduct = () => {
     const res = await axios
       .get(`http://localhost:3003/profile/${auth.user}`)
       .then((res) => {
-        console.log(JSON.stringify(res?.data[0]))
         setManuName(res?.data[0].name)
         setManuLocation(res?.data[0].location)
       })
@@ -258,7 +253,6 @@ const AddProduct = () => {
           headers: { 'Content-Type': 'application/json' },
         })
         .then((res) => {
-          console.log('productResponse: ', res.data)
           setQRrCodeGenerated(res.data.qr)
         })
         .catch((err) => {
@@ -281,12 +275,10 @@ const AddProduct = () => {
     const duplicates = existingSerialNumbers.filter(
       (item, index) => existingSerialNumbers.indexOf(item) != index
     )
-    console.log('duplicates: ', duplicates)
+
     const isDuplicate = duplicates.length >= 1
 
     setIsUnique(!isDuplicate)
-    console.log(existingSerialNumbers)
-    console.log('isUnique: ', isUnique)
   }
 
   const handleSubmit = async (e) => {

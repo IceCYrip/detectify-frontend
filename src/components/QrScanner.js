@@ -12,7 +12,6 @@ const QrScanner = (props) => {
     <>
       <QrReader
         onResult={(result, error) => {
-          console.log('ScanResult: ', result)
           if (!!result?.text) {
             props.passData(result?.text)
           }

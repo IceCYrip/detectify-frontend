@@ -33,8 +33,6 @@ const ScannerPage = () => {
   const passData = async (data) => {
     const scannedData = !!data ? JSON.parse(data) : ''
 
-    console.log('scannedData: ', scannedData)
-
     if (scannedData?.serialNumber) {
       axios
         .post('http://localhost:3003/product/verify', {
@@ -64,7 +62,6 @@ const ScannerPage = () => {
       const product = await productContract.getProduct(
         scannedData?.serialNumber
       )
-      console.log('ProductDetailsfromContract: ', product)
       if (product?.length > 0) {
         if (auth?.role == 'supplier' || auth?.role == 'retailer') {
           navigate('/update-product', { state: { scannedData } })

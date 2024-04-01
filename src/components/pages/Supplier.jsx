@@ -20,12 +20,10 @@ const findMetaMaskAccount = async () => {
       return null
     }
 
-    console.log('We have the Ethereum object', ethereum)
     const accounts = await ethereum.request({ method: 'eth_accounts' })
 
     if (accounts.length !== 0) {
       const account = accounts[0]
-      console.log('Found an authorized account:', account)
       return account
     } else {
       console.error('No authorized account found')
@@ -60,7 +58,6 @@ const Supplier = () => {
         method: 'eth_requestAccounts',
       })
 
-      console.log('Connected', accounts[0])
       setCurrentAccount(accounts[0])
     } catch (error) {
       console.error(error)

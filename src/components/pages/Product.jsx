@@ -33,12 +33,11 @@ const findMetaMaskAccount = async () => {
       return null
     }
 
-    console.log('We have the Ethereum object', ethereum)
     const accounts = await ethereum.request({ method: 'eth_accounts' })
 
     if (accounts.length !== 0) {
       const account = accounts[0]
-      console.log('Found an authorized account:', account)
+
       return account
     } else {
       console.error('No authorized account found')
@@ -104,7 +103,6 @@ const Product = () => {
   }
 
   useEffect(() => {
-    console.log('scannedData2: ', locationState)
     setName(locationState?.name)
     setBrand(locationState?.brand)
     setSerialNumber(locationState?.serialNumber)
@@ -122,9 +120,6 @@ const Product = () => {
     const contractAddress = data[0]
     setSerialNumber(data[1])
 
-    console.log('contract address', contractAddress)
-    console.log('serial number', data[1])
-
     if (contractAddress === CONTRACT_ADDRESS) {
       try {
         const { ethereum } = window
@@ -138,15 +133,7 @@ const Product = () => {
             signer
           )
 
-          console.log('here')
-
           const product = await productContract.getProduct(data[1].toString())
-
-          // setProductData(product.toString())
-          // setToUpdate(true);
-
-          console.log('Retrieved product...', product)
-          // setData(product.toString())
 
           setSaglaData(product)
         } else {
@@ -175,13 +162,10 @@ const Product = () => {
         isSold: obj[4],
       }
     })
-    console.log('historyAali: ', history)
     setHistory(history)
   }
 
   const setData = (d) => {
-    console.log('product data: ', d)
-
     const arr = d.split(',')
 
     setName(arr[1])
@@ -210,7 +194,6 @@ const Product = () => {
 
       start += 5
     }
-    console.log('hist', hist)
     setHistory(hist)
   }
 
@@ -223,7 +206,6 @@ const Product = () => {
     return history.map((item, index) => {
       const date = dayjs(item?.timestamp * 1000).format('DD/MM/YYYY')
       const time = dayjs(item?.timestamp * 1000).format('HH:mm a')
-      console.log('getting history')
 
       return (
         <TimelineItem key={index}>
