@@ -68,7 +68,7 @@ const UpdateProductDetails = () => {
   useEffect(() => {
     const data = qrData?.scannedData
 
-    setSerialNumber(data?.serialNumber)
+    setSerialNumber(+data?.serialNumber)
 
     findMetaMaskAccount().then((account) => {
       if (account !== null) {
@@ -167,6 +167,8 @@ const UpdateProductDetails = () => {
         setLoading('Mined (Add Product History) --', registerTxn.hash)
 
         const product = await productContract.getProduct(serialNumber)
+
+        console.log('Updated product: ', product, serialNumber)
 
         setLoading('Done! Product details updated successfully!')
       } else {

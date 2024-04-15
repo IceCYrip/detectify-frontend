@@ -239,7 +239,7 @@ const UpdateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    console.log('locationState: ', location.state)
     navigate('/update-product-details', {
       state: { scannedData: location.state },
     })
