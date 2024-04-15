@@ -154,7 +154,7 @@ const UpdateProduct = () => {
   const setSaglaData = (data) => {
     let retrievedProduct = data
 
-    setSerialNumber(retrievedProduct[0])
+    setSerialNumber(locationState?.serialNumber)
     setName(retrievedProduct[1])
     setBrand(retrievedProduct[2])
     setDescription(retrievedProduct[3])
