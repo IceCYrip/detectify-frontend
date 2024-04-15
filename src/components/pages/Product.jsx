@@ -75,6 +75,7 @@ const Product = () => {
   const locationState = location.state
 
   useEffect(() => {
+    console.log(locationState)
     !!locationState?.serialNumber && getDataFromKuthunTari()
   }, [locationState])
 
@@ -91,7 +92,7 @@ const Product = () => {
       )
 
       const product = await productContract.getProduct(
-        locationState?.serialNumber
+        +locationState?.serialNumber
       )
 
       console.log('Retrieved product...', product)
@@ -379,12 +380,16 @@ const Product = () => {
             <TimelineItem>
               <TimelineOppositeContent color='textSecondary'>
                 <b>
-                  {dayjs(history[history.length - 1]?.timestamp * 1000).format(
-                    'DD/MM/YYYY'
-                  )}{' '}
-                  {dayjs(history[history.length - 1]?.timestamp * 1000).format(
-                    'HH:mm a'
-                  )}
+                  {dayjs(
+                    !!history?.length
+                      ? history[history?.length - 1]?.timestamp * 1000
+                      : new Date()
+                  ).format('DD/MM/YYYY')}{' '}
+                  {dayjs(
+                    !!history?.length
+                      ? history[history.length - 1]?.timestamp * 1000
+                      : new Date()
+                  ).format('HH:mm a')}
                 </b>
               </TimelineOppositeContent>
               <TimelineSeparator>

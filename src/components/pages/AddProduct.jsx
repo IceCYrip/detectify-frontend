@@ -64,7 +64,7 @@ const AddProduct = () => {
   const [manuName, setManuName] = useState('')
   const [loading, setLoading] = useState('')
   const [manuLocation, setManuLocation] = useState('')
-  const [isUnique, setIsUnique] = useState(true)
+  // const [isUnique, setIsUnique] = useState(true)
 
   const CONTRACT_ADDRESS = '0x62081f016446585cCC507528cc785980296b4Ccd'
   const contractABI = abi.abi
@@ -87,47 +87,8 @@ const AddProduct = () => {
     axios
       .get('http://localhost:3003/product/serialNumber')
       .then((res) => setSerialNumber(res?.data?.serialnumber + 1))
+      .catch((err) => console.log(err))
   }, [])
-
-  // useEffect(() => {
-  //   Geocode.setApiKey('AIzaSyB5MSbxR9Vuj1pPeGvexGvQ3wUel4znfYY')
-
-  //   Geocode.fromLatLng(manuLatitude, manuLongtitude).then(
-  //     (response) => {
-  //       const address = response.results[0].formatted_address
-  //       let city, state, country
-  //       for (
-  //         let i = 0;
-  //         i < response.results[0].address_components.length;
-  //         i++
-  //       ) {
-  //         for (
-  //           let j = 0;
-  //           j < response.results[0].address_components[i].types.length;
-  //           j++
-  //         ) {
-  //           switch (response.results[0].address_components[i].types[j]) {
-  //             case 'locality':
-  //               city = response.results[0].address_components[i].long_name
-  //               break
-  //             case 'administrative_area_level_1':
-  //               state = response.results[0].address_components[i].long_name
-  //               break
-  //             case 'country':
-  //               country = response.results[0].address_components[i].long_name
-  //               break
-  //           }
-  //         }
-  //       }
-  //       // setManuLocation(address.replace(/,/g, ';'))
-  //       setManuLocation(address)
-
-  //     },
-  //     (error) => {
-  //       console.error(error)
-  //     }
-  //   )
-  // }, [manuLatitude, manuLongtitude])
 
   const generateQRCode = async (serialNumber) => {
     // const qrCode = await productContract.getProduct(serialNumber);
@@ -263,39 +224,41 @@ const AddProduct = () => {
     }
   }
 
-  const checkUnique = async () => {
-    const res = await axios.get('http://localhost:3003/product/serialNumber')
+  // const checkUnique = async () => {
+  //   const res = await axios.get('http://localhost:3003/product/serialNumber')
 
-    const existingSerialNumbers = res.data.map(
-      (product) => product.serialnumber
-    )
-    existingSerialNumbers.push(serialNumber)
+  //   const existingSerialNumbers = res.data?.serialnumber
+  //   existingSerialNumbers.push(serialNumber)
 
-    // checking for duplicated serial number
-    const duplicates = existingSerialNumbers.filter(
-      (item, index) => existingSerialNumbers.indexOf(item) != index
-    )
+  //   // checking for duplicated serial number
+  //   const duplicates = existingSerialNumbers.filter(
+  //     (item, index) => existingSerialNumbers.indexOf(item) != index
+  //   )
 
-    const isDuplicate = duplicates.length >= 1
+  //   const isDuplicate = duplicates.length >= 1
 
-    setIsUnique(!isDuplicate)
-  }
+  //   setIsUnique(!isDuplicate)
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    checkUnique()
+    // checkUnique()
 
-    if (isUnique) {
-      // uploadImage(image)
-      // addProductDB(e) // add product to database
-      setLoading(
-        'Please pay the transaction fee to update the product details...'
-      )
-      await registerProduct(e)
-    }
+    // if (isUnique) {
+    //   // uploadImage(image)
+    //   // addProductDB(e) // add product to database
+    //   setLoading(
+    //     'Please pay the transaction fee to update the product details...'
+    //   )
+    //   await registerProduct(e)
+    // }
+    setLoading(
+      'Please pay the transaction fee to update the product details...'
+    )
+    await registerProduct(e)
 
-    setIsUnique(true)
+    // setIsUnique(true)
   }
 
   return (
@@ -333,8 +296,8 @@ const AddProduct = () => {
           <TextField
             fullWidth
             disabled
-            error={!isUnique}
-            helperText={!isUnique ? 'Serial Number already exists' : ''}
+            // error={!isUnique}
+            // helperText={!isUnique ? 'Serial Number already exists' : ''}
             id='outlined-basic'
             margin='normal'
             label='Serial Number'
