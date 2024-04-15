@@ -142,6 +142,7 @@ const AddProduct = () => {
           console.log('image uploaded')
         }
       })
+      .catch((err) => console.log(err))
   }
 
   const registerProduct = async () => {
@@ -202,6 +203,8 @@ const AddProduct = () => {
   }
 
   const addProductDB = async () => {
+    uploadImage(image)
+
     try {
       const profileData = JSON.stringify({
         serialNumber: serialNumber,

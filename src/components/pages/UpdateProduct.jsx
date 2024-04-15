@@ -106,7 +106,8 @@ const UpdateProduct = () => {
             signer
           )
 
-          const product = await productContract.getProduct(data[1].toString())
+          // const product = await productContract.getProduct(data[1].toString())
+          const product = await productContract.getProduct(data[1])
 
           setSaglaData(product)
         } else {
@@ -139,8 +140,10 @@ const UpdateProduct = () => {
       )
 
       const product = await productContract.getProduct(
-        locationState?.serialNumber
+        +locationState?.serialNumber
       )
+
+      console.log('Retreived Product: ', product)
 
       setSaglaData(product)
     } else {
@@ -176,6 +179,7 @@ const UpdateProduct = () => {
     setBrand(arr[2])
     setDescription(arr[3].replace(/;/g, ','))
     // setImageName(arr[4]);
+    setImageName('/Heels.webp')
     getImage(arr[4])
 
     const hist = []
