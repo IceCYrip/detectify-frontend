@@ -163,13 +163,14 @@ const AddProduct = () => {
         const registerTxn = await productContract.registerProduct(
           name,
           brand,
-          serialNumber,
+          String(serialNumber),
           description.replace(/,/g, ';'),
           image.file.name,
           manuName,
           manuLocation,
           manuDate.toString()
         )
+
         console.log('Mining (Product Registering) ...', registerTxn.hash)
         setLoading('Mining (Product Registering) ...', registerTxn.hash)
 
@@ -180,7 +181,7 @@ const AddProduct = () => {
 
         generateQRCode(serialNumber)
 
-        const product = await productContract.getProduct(serialNumber)
+        const product = await productContract.getProduct(String(serialNumber))
 
         console.log('Retrieved product...', product)
         setLoading('')
@@ -259,7 +260,7 @@ const AddProduct = () => {
     setLoading(
       'Please pay the transaction fee to update the product details...'
     )
-    await registerProduct(e)
+    await registerProduct()
 
     // setIsUnique(true)
   }
@@ -284,7 +285,7 @@ const AddProduct = () => {
         }}
       >
         <Typography
-          variant='h2'
+          variant="h2"
           sx={{
             textAlign: 'center',
             marginBottom: '3%',
@@ -301,44 +302,44 @@ const AddProduct = () => {
             disabled
             // error={!isUnique}
             // helperText={!isUnique ? 'Serial Number already exists' : ''}
-            id='outlined-basic'
-            margin='normal'
-            label='Serial Number'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Serial Number"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setSerialNumber(e.target.value)}
             value={serialNumber}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Name'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Name"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Brand'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Brand"
+            variant="outlined"
+            inherit="False"
             onChange={(e) => setBrand(e.target.value)}
             value={brand}
           />
 
           <TextField
             fullWidth
-            id='outlined-basic'
-            margin='normal'
-            label='Description'
-            variant='outlined'
-            inherit='False'
+            id="outlined-basic"
+            margin="normal"
+            label="Description"
+            variant="outlined"
+            inherit="False"
             multiline
             minRows={2}
             onChange={(e) => setDescription(e.target.value)}
@@ -346,19 +347,19 @@ const AddProduct = () => {
           />
 
           <Button
-            variant='outlined'
-            component='label'
+            variant="outlined"
+            component="label"
             fullWidth
             sx={{ marginTop: '3%', marginBottom: '3%' }}
           >
             Upload Image
-            <input type='file' hidden onChange={handleImage} />
+            <input type="file" hidden onChange={handleImage} />
           </Button>
 
           {image.filepreview !== null ? (
             <img
               src={image.filepreview}
-              alt='preview'
+              alt="preview"
               style={{ width: '100%', height: '100%' }}
             />
           ) : null}
@@ -376,7 +377,7 @@ const AddProduct = () => {
               <QRCode value={qrData} id="QRCode" />
             </div>
           ) : null} */}
-          {!!qrCodeGenerated && <img src={qrCodeGenerated} alt='qrCode' />}
+          {!!qrCodeGenerated && <img src={qrCodeGenerated} alt="qrCode" />}
 
           {/* {qrData !== "" ? (
             
@@ -393,8 +394,8 @@ const AddProduct = () => {
               }}
             >
               <Button
-                variant='outlined'
-                component='label'
+                variant="outlined"
+                component="label"
                 fullWidth
                 sx={{ marginTop: '3%', marginBottom: '3%' }}
                 onClick={downloadQR}
@@ -406,7 +407,7 @@ const AddProduct = () => {
 
           {loading === '' ? null : (
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
                 textAlign: 'center',
                 marginTop: '3%',
@@ -418,8 +419,8 @@ const AddProduct = () => {
 
           <Button
             disabled={buttonState}
-            variant='contained'
-            type='submit'
+            variant="contained"
+            type="submit"
             sx={{
               width: '100%',
               marginTop: '3%',

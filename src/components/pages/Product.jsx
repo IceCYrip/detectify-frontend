@@ -92,7 +92,7 @@ const Product = () => {
       )
 
       const product = await productContract.getProduct(
-        +locationState?.serialNumber
+        String(locationState?.serialNumber)
       )
 
       console.log('Retrieved product...', product)
@@ -210,7 +210,7 @@ const Product = () => {
 
       return (
         <TimelineItem key={index}>
-          <TimelineOppositeContent color='textSecondary'>
+          <TimelineOppositeContent color="textSecondary">
             <b>
               {date} {time}
             </b>
@@ -328,7 +328,7 @@ const Product = () => {
               }}
             >
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '5%',
@@ -338,7 +338,7 @@ const Product = () => {
               </Typography>
 
               <Typography
-                variant='body2'
+                variant="body2"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
@@ -348,7 +348,7 @@ const Product = () => {
               </Typography>
 
               <Typography
-                variant='body2'
+                variant="body2"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
@@ -358,7 +358,7 @@ const Product = () => {
               </Typography>
 
               <Typography
-                variant='body2'
+                variant="body2"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
@@ -378,7 +378,7 @@ const Product = () => {
           >
             {getHistory()}
             <TimelineItem>
-              <TimelineOppositeContent color='textSecondary'>
+              <TimelineOppositeContent color="textSecondary">
                 <b>
                   {dayjs(
                     !!history?.length
@@ -411,7 +411,7 @@ const Product = () => {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               onClick={handleBack}
               sx={{
                 marginTop: '5%',

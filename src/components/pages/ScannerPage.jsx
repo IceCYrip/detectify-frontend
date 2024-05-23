@@ -32,7 +32,6 @@ const ScannerPage = () => {
 
   const passData = async (data) => {
     const scannedData = !!data ? JSON.parse(data) : ''
-
     if (scannedData?.serialNumber) {
       axios
         .post('http://localhost:3003/product/verify', {
@@ -104,7 +103,7 @@ const ScannerPage = () => {
           }}
         >
           <Typography
-            variant='h2'
+            variant="h2"
             sx={{
               textAlign: 'center',
               fontFamily: 'Gambetta',
@@ -126,7 +125,7 @@ const ScannerPage = () => {
           >
             <Button
               onClick={handleBack}
-              variant='contained'
+              variant="contained"
               // sx={{
               //   marginTop: "5%",
               // }}
