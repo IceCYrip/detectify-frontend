@@ -1,4 +1,4 @@
-import { Box, Paper, Avatar, Typography, Button } from '@mui/material'
+import { Box, Paper, Avatar, Typography, Button, Skeleton } from '@mui/material'
 import bgImg from '../../img/bg.png'
 import Timeline from '@mui/lab/Timeline'
 import TimelineItem from '@mui/lab/TimelineItem'
@@ -140,7 +140,7 @@ const UpdateProduct = () => {
       )
 
       const product = await productContract.getProduct(
-        +locationState?.serialNumber
+        String(locationState?.serialNumber)
       )
 
       console.log('Retreived Product: ', product)
@@ -215,7 +215,7 @@ const UpdateProduct = () => {
 
       return (
         <TimelineItem key={index}>
-          <TimelineOppositeContent color='textSecondary'>
+          <TimelineOppositeContent color="textSecondary">
             <b>
               {time} {date}
             </b>
@@ -258,13 +258,10 @@ const UpdateProduct = () => {
         elevation={3}
         sx={{
           width: '400px',
-          // margin: "auto",
-          // marginTop: "10%",
-          // marginBottom: "10%",
+
           margin: '5vh 0vh',
 
           padding: '3%',
-          // backgroundColor: '#e3eefc',
           backgroundColor: 'white',
         }}
       >
@@ -275,7 +272,7 @@ const UpdateProduct = () => {
           }}
         >
           <Typography
-            variant='h2'
+            variant="h2"
             sx={{
               textAlign: 'center',
               marginBottom: '3%',
@@ -310,19 +307,23 @@ const UpdateProduct = () => {
                 width: '35%',
               }}
             >
-              <Avatar
-                alt={name}
-                src={image.filepreview}
-                sx={{
-                  width: 100,
-                  height: 100,
-                  margin: 'auto',
-                  marginBottom: '3%',
-                  backgroundColor: '#3f51b5',
-                }}
-              >
-                {name}
-              </Avatar>
+              {!image.filepreview ? (
+                <Skeleton variant="circular" width={100} height={100} />
+              ) : (
+                <Avatar
+                  alt={name}
+                  src={image.filepreview}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    marginBottom: '3%',
+                    backgroundColor: '#3f51b5',
+                  }}
+                >
+                  {name}
+                </Avatar>
+              )}
             </Box>
             <Box
               sx={{
@@ -335,45 +336,69 @@ const UpdateProduct = () => {
                 width: '65%',
               }}
             >
+              {/* Product Name */}
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
+
+                  display: 'flex',
+                  columnGap: '5px',
+                  alignItems: 'center',
                 }}
               >
-                Name: {name}
-                {/* Product Name */}
+                {!serialNumber ? (
+                  <Skeleton variant="rectangular" width={125} height={20} />
+                ) : (
+                  <span>Name: {name}</span>
+                )}
               </Typography>
 
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
+                  display: 'flex',
+                  columnGap: '5px',
+                  alignItems: 'center',
                 }}
               >
-                Serial Number: {serialNumber}
+                {!serialNumber ? (
+                  <Skeleton variant="rectangular" width={175} height={20} />
+                ) : (
+                  <span>Serial Number: {serialNumber}</span>
+                )}
               </Typography>
 
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
                 }}
               >
-                Description: {description}
+                {/* Description: {description} */}
+                {!description ? (
+                  <Skeleton variant="rectangular" width={250} height={20} />
+                ) : (
+                  <span>Description: {description}</span>
+                )}
               </Typography>
 
               <Typography
-                variant='body1'
+                variant="body1"
                 sx={{
                   textAlign: 'left',
                   marginBottom: '3%',
                 }}
               >
-                Brand: {brand}
+                {!brand ? (
+                  <Skeleton variant="rectangular" width={125} height={20} />
+                ) : (
+                  <span>Brand: {brand}</span>
+                )}
               </Typography>
             </Box>
           </Box>
@@ -387,7 +412,7 @@ const UpdateProduct = () => {
           >
             {getHistory()}
             <TimelineItem>
-              <TimelineOppositeContent color='textSecondary'>
+              <TimelineOppositeContent color="textSecondary">
                 <b>
                   {dayjs().format('HH:mm a')} {dayjs().format('MM/DD/YYYY')}
                 </b>
@@ -405,7 +430,7 @@ const UpdateProduct = () => {
 
           {loading === '' ? null : (
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
                 textAlign: 'center',
                 marginTop: '3%',
@@ -416,8 +441,8 @@ const UpdateProduct = () => {
           )}
           {!isSold && (
             <Button
-              variant='contained'
-              type='submit'
+              variant="contained"
+              type="submit"
               sx={{
                 width: '50%',
                 marginTop: '3%',
@@ -436,7 +461,7 @@ const UpdateProduct = () => {
             }}
           >
             <Button
-              variant='outlined'
+              variant="outlined"
               onClick={handleBack}
               sx={{
                 marginTop: '5%',

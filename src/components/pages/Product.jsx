@@ -1,4 +1,4 @@
-import { Box, Paper, Avatar, Typography, Button } from '@mui/material'
+import { Box, Paper, Avatar, Typography, Button, Skeleton } from '@mui/material'
 import bgImg from '../../img/bg.png'
 import Timeline from '@mui/lab/Timeline'
 import TimelineItem from '@mui/lab/TimelineItem'
@@ -149,6 +149,9 @@ const Product = () => {
   const setSaglaData = (data) => {
     let retrievedProduct = data
 
+    console.log('retrievedProduct: ', retrievedProduct)
+
+    setSerialNumber(retrievedProduct[0])
     setName(retrievedProduct[1])
     setBrand(retrievedProduct[2])
     setDescription(retrievedProduct[3])
@@ -302,19 +305,23 @@ const Product = () => {
                 width: '35%',
               }}
             >
-              <Avatar
-                alt={name}
-                src={image.filepreview}
-                sx={{
-                  width: 100,
-                  height: 100,
-                  margin: 'auto',
-                  marginBottom: '3%',
-                  backgroundColor: '#3f51b5',
-                }}
-              >
-                {name}
-              </Avatar>
+              {!image.filepreview ? (
+                <Skeleton variant="circular" width={100} height={100} />
+              ) : (
+                <Avatar
+                  alt={name}
+                  src={image.filepreview}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    margin: 'auto',
+                    marginBottom: '3%',
+                    backgroundColor: '#3f51b5',
+                  }}
+                >
+                  {name}
+                </Avatar>
+              )}
             </Box>
             <Box
               sx={{
@@ -325,6 +332,9 @@ const Product = () => {
                 alignItems: 'left',
                 flex: '0 0 65%',
                 width: '65%',
+
+                display: 'flex',
+                columnGap: '5px',
               }}
             >
               <Typography
@@ -334,7 +344,32 @@ const Product = () => {
                   marginBottom: '5%',
                 }}
               >
-                Name: {name}
+                {/* Name: {name} */}
+
+                {!serialNumber ? (
+                  <Skeleton variant="rectangular" width={125} height={20} />
+                ) : (
+                  <span>Name: {name}</span>
+                )}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  textAlign: 'left',
+                  marginBottom: '3%',
+
+                  display: 'flex',
+                  columnGap: '5px',
+                  alignItems: 'center',
+                }}
+              >
+                {/* Serial Number: {serialNumber} */}
+                {!serialNumber ? (
+                  <Skeleton variant="rectangular" width={175} height={20} />
+                ) : (
+                  <span>Serial Number: {serialNumber}</span>
+                )}
               </Typography>
 
               <Typography
@@ -344,7 +379,13 @@ const Product = () => {
                   marginBottom: '3%',
                 }}
               >
-                Serial Number: {serialNumber}
+                {/* Description: {description} */}
+
+                {!description ? (
+                  <Skeleton variant="rectangular" width={250} height={20} />
+                ) : (
+                  <span>Description: {description}</span>
+                )}
               </Typography>
 
               <Typography
@@ -354,17 +395,13 @@ const Product = () => {
                   marginBottom: '3%',
                 }}
               >
-                Description: {description}
-              </Typography>
+                {/* Brand: {brand} */}
 
-              <Typography
-                variant="body2"
-                sx={{
-                  textAlign: 'left',
-                  marginBottom: '3%',
-                }}
-              >
-                Brand: {brand}
+                {!brand ? (
+                  <Skeleton variant="rectangular" width={125} height={20} />
+                ) : (
+                  <span>Brand: {brand}</span>
+                )}
               </Typography>
             </Box>
           </Box>

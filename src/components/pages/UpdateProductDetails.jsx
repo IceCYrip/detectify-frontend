@@ -68,7 +68,7 @@ const UpdateProductDetails = () => {
   useEffect(() => {
     const data = qrData?.scannedData
 
-    setSerialNumber(+data?.serialNumber)
+    setSerialNumber(String(data?.serialNumber))
 
     findMetaMaskAccount().then((account) => {
       if (account !== null) {
@@ -155,7 +155,7 @@ const UpdateProductDetails = () => {
 
         // write transactions
         const registerTxn = await productContract.addProductHistory(
-          serialNumber,
+          String(serialNumber),
           currName,
           currLocation,
           currDate.toString(),
@@ -166,11 +166,8 @@ const UpdateProductDetails = () => {
         await registerTxn.wait()
         setLoading('Mined (Add Product History) --', registerTxn.hash)
 
-        const product = await productContract.getProduct(serialNumber)
-
-        console.log('Updated product: ', product, serialNumber)
-
         setLoading('Done! Product details updated successfully!')
+        navigate(-1)
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -213,7 +210,7 @@ const UpdateProductDetails = () => {
         }}
       >
         <Typography
-          variant='h2'
+          variant="h2"
           sx={{
             textAlign: 'center',
             marginBottom: '3%',
@@ -227,26 +224,26 @@ const UpdateProductDetails = () => {
 
         <TextField
           fullWidth
-          id='outlined-disabled'
-          margin='normal'
-          label='Serial Number'
+          id="outlined-disabled"
+          margin="normal"
+          label="Serial Number"
           disabled
           value={serialNumber}
         />
 
         <TextField
           fullWidth
-          id='outlined-disabled'
-          margin='normal'
-          label='Name'
+          id="outlined-disabled"
+          margin="normal"
+          label="Name"
           disabled
           value={currName}
         />
         <TextField
           fullWidth
-          id='outlined-disabled'
-          margin='normal'
-          label='Location'
+          id="outlined-disabled"
+          margin="normal"
+          label="Location"
           disabled
           multiline
           minRows={2}
@@ -254,9 +251,9 @@ const UpdateProductDetails = () => {
         />
         <TextField
           fullWidth
-          id='outlined-disabled'
-          margin='normal'
-          label='Date'
+          id="outlined-disabled"
+          margin="normal"
+          label="Date"
           disabled
           value={dayjs(currDate * 1000).format('MMMM D, YYYY h:mm A')}
         />
@@ -264,7 +261,7 @@ const UpdateProductDetails = () => {
         {auth.role === 'supplier' ? null : (
           <Autocomplete
             disablePortal
-            id='combo-box-demo'
+            id="combo-box-demo"
             options={options}
             fullWidth
             value={isSold}
@@ -275,18 +272,18 @@ const UpdateProductDetails = () => {
               <TextField
                 {...params}
                 fullWidth
-                id='outlined-basic'
-                margin='normal'
-                label='Is Sold?'
-                variant='outlined'
-                inherit='False'
+                id="outlined-basic"
+                margin="normal"
+                label="Is Sold?"
+                variant="outlined"
+                inherit="False"
               />
             )}
           />
         )}
         {loading === '' ? null : (
           <Typography
-            variant='body2'
+            variant="body2"
             sx={{
               textAlign: 'center',
               marginTop: '3%',
@@ -304,8 +301,8 @@ const UpdateProductDetails = () => {
           }}
         >
           <Button
-            variant='contained'
-            type='submit'
+            variant="contained"
+            type="submit"
             onClick={handleSubmit}
             sx={{
               textAlign: 'center',
@@ -327,7 +324,7 @@ const UpdateProductDetails = () => {
           }}
         >
           <Button
-            variant='outlined'
+            variant="outlined"
             onClick={handleBack}
             sx={{
               marginTop: '5%',
